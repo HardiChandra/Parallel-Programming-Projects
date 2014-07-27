@@ -1,0 +1,119 @@
+    1 /* Project 1 - PROGRAM Merging 2 Sorted List */
+    2 /* Name : Hardi Chandra */
+    3 /* Student ID : 983772 */
+    4 
+    5 #DEFINE PerSortedList 100
+    6 #DEFINE MergeSortedList 200
+    7 
+    8 int SortedList1[PerSortedList];
+    9 int SortedList2[PerSortedList];
+   10 int SortedListMerged[MergeSortedList];
+   11 int i,j;
+   12 float parstart, seqstart;
+   13 
+   14 void Merge1( int src ) 
+   15 {	
+   16 	int start = 0;
+   17 	int end = PerSortedList - 1;
+   18 	int mid = 0;
+   19 	int val = 0;
+   20 	
+   21 	while(start <= end)
+   22 	{
+   23 		mid=start+(end - start) / 2;
+   24 		val=SortedList2[mid];
+   25 		if(SortedList1[src] < val)
+   26 			end=mid-1;
+   27 		else
+   28 			start=mid+1;
+   29 		
+   30 		if(start > end && SortedList1[src] >= SortedList2[mid])
+   31 			mid=start;
+   32 	}
+   33 	SortedListMerged[src+mid] = SortedList1[src];
+   34 }
+   35 
+   36 void Merge2( int src ) 
+   37 {	
+   38 	int start = 0;
+   39 	int end = PerSortedList - 1;
+   40 	int mid=0;
+   41 	int val=0;
+   42 	
+   43 	while(start <= end)
+   44 	{
+   45 		mid=start+(end - start) / 2;
+   46 		val=SortedList1[mid];
+   47 		if(SortedList2[src] <= val)
+   48 			end=mid-1;
+   49 		else
+   50 			start=mid+1;
+   51 		
+   52 		if(start > end && SortedList2[src] >= SortedList1[mid])
+   53 			mid=start;
+   54 	}
+   55 	SortedListMerged[src+mid] = SortedList2[src];
+   56 }
+   57 
+   58 main() 
+   59 {
+   60 	for(i = 0; i < PerSortedList; i++)
+   61 	{
+   62 		cin >> SortedList1[i];
+   63 	}
+   64 	for(i = 0; i < PerSortedList; i++)
+   65 	{
+   66 		cin >> SortedList2[i];
+   67 	}
+   68 	
+   69 	cout << "Sorted List 1 = ";
+   70 	for(i = 0; i < PerSortedList; i++)
+   71 	{	
+   72 		if(i % 20 == 0)
+   73 			cout << endl;
+   74 		cout << SortedList1[i];
+   75 		cout << " ";
+   76 	}
+   77 	cout << endl;
+   78 	cout << endl;
+   79 	cout << "Sorted List 2 = ";
+   80 	for(i = 0; i < PerSortedList; i++)
+   81 	{
+   82 		if(i % 20 == 0)
+   83 			cout << endl;
+   84 		cout << SortedList2[i];
+   85 		cout << " ";
+   86 	}
+   87 	cout << endl;
+   88 	
+   89 	parstart=clock();
+   90 	seqstart=seqtime();
+   91 	forall i = 0 to PerSortedList-1 do
+   92 	{
+   93 		Merge1(i);
+   94 		Merge2(i); 
+   95 	}
+   96 	
+   97 	cout << endl;
+   98 	cout << "Sorted List Merged1 = ";
+   99 	cout << endl;
+  100 	for(i = 0; i < MergeSortedList; i++)
+  101 	{
+  102 		if(i % 20 == 0)
+  103 			cout << endl;
+  104 		cout << SortedListMerged[i];
+  105 		cout << " ";
+  106 	}
+  107 	cout << endl;
+  108 	cout << endl;
+  109 	cout << "Parralel Time = ";
+  110 	cout << clock() - parstart;
+  111 	cout << endl;
+  112 	cout << "Sequential Time = ";
+  113 	cout << seqtime() - seqstart;
+  114 	cout << endl;
+  115 	cout << "Speedup = ";
+  116 	cout << (seqtime() - seqstart) / (clock() - parstart);
+  117 	cout << endl;
+  118 	cout << endl;
+  119 }

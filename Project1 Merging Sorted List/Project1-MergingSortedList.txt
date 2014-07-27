@@ -1,0 +1,119 @@
+/* Project 1 - PROGRAM Merging 2 Sorted List */
+/* Name : Hardi Chandra */
+/* Student ID : 983772 */
+
+#DEFINE PerSortedList 100
+#DEFINE MergeSortedList 200
+
+int SortedList1[PerSortedList];
+int SortedList2[PerSortedList];
+int SortedListMerged[MergeSortedList];
+int i,j;
+float parstart, seqstart;
+
+void Merge1( int src ) 
+{	
+	int start = 0;
+	int end = PerSortedList - 1;
+	int mid = 0;
+	int val = 0;
+	
+	while(start <= end)
+	{
+		mid=start+(end - start) / 2;
+		val=SortedList2[mid];
+		if(SortedList1[src] < val)
+			end=mid-1;
+		else
+			start=mid+1;
+		
+		if(start > end && SortedList1[src] >= SortedList2[mid])
+			mid=start;
+	}
+	SortedListMerged[src+mid] = SortedList1[src];
+}
+
+void Merge2( int src ) 
+{	
+	int start = 0;
+	int end = PerSortedList - 1;
+	int mid=0;
+	int val=0;
+	
+	while(start <= end)
+	{
+		mid=start+(end - start) / 2;
+		val=SortedList1[mid];
+		if(SortedList2[src] <= val)
+			end=mid-1;
+		else
+			start=mid+1;
+		
+		if(start > end && SortedList2[src] >= SortedList1[mid])
+			mid=start;
+	}
+	SortedListMerged[src+mid] = SortedList2[src];
+}
+
+main() 
+{
+	for(i = 0; i < PerSortedList; i++)
+	{
+		cin >> SortedList1[i];
+	}
+	for(i = 0; i < PerSortedList; i++)
+	{
+		cin >> SortedList2[i];
+	}
+	
+	cout << "Sorted List 1 = ";
+	for(i = 0; i < PerSortedList; i++)
+	{	
+		if(i % 20 == 0)
+			cout << endl;
+		cout << SortedList1[i];
+		cout << " ";
+	}
+	cout << endl;
+	cout << endl;
+	cout << "Sorted List 2 = ";
+	for(i = 0; i < PerSortedList; i++)
+	{
+		if(i % 20 == 0)
+			cout << endl;
+		cout << SortedList2[i];
+		cout << " ";
+	}
+	cout << endl;
+	
+	parstart=clock();
+	seqstart=seqtime();
+	forall i = 0 to PerSortedList-1 do
+	{
+		Merge1(i);
+		Merge2(i); 
+	}
+	
+	cout << endl;
+	cout << "Sorted List Merged1 = ";
+	cout << endl;
+	for(i = 0; i < MergeSortedList; i++)
+	{
+		if(i % 20 == 0)
+			cout << endl;
+		cout << SortedListMerged[i];
+		cout << " ";
+	}
+	cout << endl;
+	cout << endl;
+	cout << "Parralel Time = ";
+	cout << clock() - parstart;
+	cout << endl;
+	cout << "Sequential Time = ";
+	cout << seqtime() - seqstart;
+	cout << endl;
+	cout << "Speedup = ";
+	cout << (seqtime() - seqstart) / (clock() - parstart);
+	cout << endl;
+	cout << endl;
+}

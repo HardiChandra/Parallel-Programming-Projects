@@ -1,0 +1,81 @@
+/* Project 2 - Prime Number Sieve */
+/* Name : Hardi Chandra */
+/* Student ID : 983772 */
+
+#include<math.h>
+#define n 100;
+#define p 10;
+
+boolean prime[n+1];
+int i,num,loc;
+int stream inchan[p+2];
+int root;
+
+void process(int nbr)
+{
+	root=(int)sqrt(n);
+	int val=0, j, k, l;
+	
+	if(nbr==1)
+	{
+		for(j=2 ; j <= root ; j++)
+			prime[j]=TRUE;
+		for(j=2 ; j <= root ; j++)
+		{
+			if(prime[j])
+			{
+				for(k=j + j ; k <= root ; k = k + j)
+					prime[k]=FALSE;	
+				send(inchan[2], j);
+			}
+		}
+	}
+	else
+	{	
+		int remainder, start, xx;
+		for(xx=(nbr-1) * root + 1 ; xx <= nbr * root ; xx++)
+		{
+			prime[xx]=TRUE;
+		}
+		while(val + val <= root)
+		{
+			recv(inchan[nbr],val);
+			send(inchan[nbr+1],val);
+			
+			remainder = (nbr - 1) * root % val;
+			start = (nbr - 1) * root + val - remainder;
+			for(l = start ; l <=  nbr * root ; l = l + val)
+			{
+				if(prime[l])
+					prime[l]=FALSE;
+			}
+		}
+	}
+}
+
+main()
+{
+	int root=(int)sqrt(n);
+	float parStart, seqStart;
+	parStart=clock();
+	seqStart=seqtime();
+	forall num=1 to root do
+		process(num);
+	cout<< "Sequential Time = ";
+	cout<< seqtime()-seqStart;
+	cout<< endl;
+	cout<< "Parallel Time = ";
+	cout<< clock()-parStart;
+	cout<< endl;
+	cout<< "Speedup = ";
+	cout<< (seqtime()-seqStart) / (clock()-parStart);
+	cout<< endl;
+	cout<< endl;
+	
+	for(i=1 ; i<=n ; i++)
+		if(prime[i]==TRUE)
+		{
+			cout << i;
+			cout << endl;
+		}
+}

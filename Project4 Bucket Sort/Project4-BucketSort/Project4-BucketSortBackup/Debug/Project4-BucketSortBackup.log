@@ -1,0 +1,21 @@
+﻿Build started 2/10/2014 7:33:13 PM.
+     1>Project "Z:\5. CS471 - Parallel Programming\Project\Project4 Bucket Sort\Project4-BucketSort\Project4-BucketSortBackup\Project4-BucketSortBackup.vcxproj" on node 4 (build target(s)).
+     1>InitializeBuildStatus:
+         Creating "Debug\Project4-BucketSortBackup.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         All outputs are up-to-date.
+         All outputs are up-to-date.
+       ManifestResourceCompile:
+         All outputs are up-to-date.
+       Link:
+         All outputs are up-to-date.
+       Manifest:
+         All outputs are up-to-date.
+       FinalizeBuildStatus:
+         Deleting file "Debug\Project4-BucketSortBackup.unsuccessfulbuild".
+         Touching "Debug\Project4-BucketSortBackup.lastbuildstate".
+     1>Done Building Project "Z:\5. CS471 - Parallel Programming\Project\Project4 Bucket Sort\Project4-BucketSort\Project4-BucketSortBackup\Project4-BucketSortBackup.vcxproj" (build target(s)).
+
+Build succeeded.
+
+Time Elapsed 00:00:00.27

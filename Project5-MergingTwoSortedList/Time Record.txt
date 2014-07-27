@@ -1,0 +1,8 @@
+/***************************************/
+/*            Time Record              */
+/***************************************/
+
+
+Sequential Elapsed Time: 333
+Parallel Elapsed Time: 175
+Speedup = 1.9028572

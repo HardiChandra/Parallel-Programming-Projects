@@ -1,0 +1,81 @@
+    1 /* Project 2 - Prime Number Sieve */
+    2 /* Name : Hardi Chandra */
+    3 /* Student ID : 983772 */
+    4 
+    5 #include<math.h>
+    6 #define n 100;
+    7 #define p 10;
+    8 
+    9 boolean prime[n+1];
+   10 int i,num,loc;
+   11 int stream inchan[p+2];
+   12 int root;
+   13 
+   14 void process(int nbr)
+   15 {
+   16 	root=(int)sqrt(n);
+   17 	int val=0, j, k, l;
+   18 	
+   19 	if(nbr==1)
+   20 	{
+   21 		for(j=2 ; j <= root ; j++)
+   22 			prime[j]=TRUE;
+   23 		for(j=2 ; j <= root ; j++)
+   24 		{
+   25 			if(prime[j])
+   26 			{
+   27 				for(k=j + j ; k <= root ; k = k + j)
+   28 					prime[k]=FALSE;	
+   29 				send(inchan[2], j);
+   30 			}
+   31 		}
+   32 	}
+   33 	else
+   34 	{	
+   35 		int remainder, start, xx;
+   36 		for(xx=(nbr-1) * root + 1 ; xx <= nbr * root ; xx++)
+   37 		{
+   38 			prime[xx]=TRUE;
+   39 		}
+   40 		while(val + val <= root)
+   41 		{
+   42 			recv(inchan[nbr],val);
+   43 			send(inchan[nbr+1],val);
+   44 			
+   45 			remainder = (nbr - 1) * root % val;
+   46 			start = (nbr - 1) * root + val - remainder;
+   47 			for(l = start ; l <=  nbr * root ; l = l + val)
+   48 			{
+   49 				if(prime[l])
+   50 					prime[l]=FALSE;
+   51 			}
+   52 		}
+   53 	}
+   54 }
+   55 
+   56 main()
+   57 {
+   58 	int root=(int)sqrt(n);
+   59 	float parStart, seqStart;
+   60 	parStart=clock();
+   61 	seqStart=seqtime();
+   62 	forall num=1 to root do
+   63 		process(num);
+   64 	cout<< "Sequential Time = ";
+   65 	cout<< seqtime()-seqStart;
+   66 	cout<< endl;
+   67 	cout<< "Parallel Time = ";
+   68 	cout<< clock()-parStart;
+   69 	cout<< endl;
+   70 	cout<< "Speedup = ";
+   71 	cout<< (seqtime()-seqStart) / (clock()-parStart);
+   72 	cout<< endl;
+   73 	cout<< endl;
+   74 	
+   75 	for(i=1 ; i<=n ; i++)
+   76 		if(prime[i]==TRUE)
+   77 		{
+   78 			cout << i;
+   79 			cout << endl;
+   80 		}
+   81 }
